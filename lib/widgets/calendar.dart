@@ -7,14 +7,12 @@ class Calendar extends StatelessWidget {
   final int year;
   final int month;
   final Widget Function(DateTime date, int index) builder;
-  final BorderSide borderSide;
 
   const Calendar({
     super.key,
     required this.year,
     required this.month,
     required this.builder,
-    this.borderSide = BorderSide.none,
   });
 
   @override
@@ -30,18 +28,9 @@ class Calendar extends StatelessWidget {
             children: [
               for (int j = 0; j < 7; j++)
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: i == 0 ? borderSide : BorderSide.none,
-                        bottom: borderSide,
-                        right: j != 6 ? borderSide : BorderSide.none,
-                      ),
-                    ),
-                    child: Opacity(
-                      opacity: dates[i * 7 + j].month == month ? 1.0 : 0.3,
-                      child: builder.call(dates[i * 7 + j], i * 7 + j),
-                    ),
+                  child: Opacity(
+                    opacity: dates[i * 7 + j].month == month ? 1.0 : 0.3,
+                    child: builder.call(dates[i * 7 + j], i * 7 + j),
                   ),
                 ),
             ],

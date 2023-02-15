@@ -2,6 +2,10 @@ int getFirstWeekDay(int year, int month) {
   return DateTime(year, month).weekday;
 }
 
+String formatWeekDay(int weekDay) {
+  return ["월", "화", "수", "목", "금", "토", "일"][weekDay - 1];
+}
+
 int getLastDay(int year, int month) {
   final date = DateTime(year, month + 1, 0);
 
