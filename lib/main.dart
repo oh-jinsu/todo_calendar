@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:todo/pages/home.dart';
+import 'package:todo/storage/sqflite.dart';
 import 'package:todo/theme/color.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initDatabase();
+
   runApp(const MyApp());
 }
 
