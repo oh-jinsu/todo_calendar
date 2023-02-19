@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
-          primary: ColorTheme.primary,
+          primary: Color(0xFFBBDEFB),
           onPrimary: Colors.white,
-          secondary: ColorTheme.primary,
+          secondary: Color(0xFFBBDEFB),
           onSecondary: Colors.white,
           background: ColorTheme.surface,
           onBackground: ColorTheme.body,
@@ -41,7 +41,11 @@ class MyApp extends StatelessWidget {
             color: ColorTheme.body,
           ),
         ),
-        textTheme: const TextTheme().apply(
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+            fontSize: 16.0,
+          ),
+        ).apply(
           bodyColor: ColorTheme.body,
         ),
         iconTheme: const IconThemeData(

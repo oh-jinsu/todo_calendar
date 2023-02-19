@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorTheme {
-  static const primary = Colors.blueAccent;
+  static const primary = Color(0xFF64B5F6);
 
   static const surface = Colors.white;
 

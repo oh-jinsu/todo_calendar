@@ -1,11 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:todo/pages/list.dart';
 import 'package:todo/widgets/calendar.dart';
 import 'package:todo/widgets/calendar_cell.dart';
 import 'package:todo/widgets/calendar_header.dart';
-
-import '../functions/date.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,75 +24,73 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
         title: Text(
           "${year.toString()}년 ${month.toString()}월",
-          style: const TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-          ),
         ),
       ),
       body: Column(
         children: [
           const CalendarHeader(),
-          Flexible(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.4,
-              ),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                child: Calendar(
-                  year: year,
-                  month: month,
-                  builder: (date, index) {
-                    return CalendarCell(
-                      date: date,
-                      selectedDate: selectedDate,
-                      onTap: () {
-                        if (date.month != month) {
-                          return;
-                        }
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2.0),
+            child: Calendar(
+              year: year,
+              month: month,
+              builder: (date, index) {
+                return CalendarCell(
+                  date: date,
+                  selectedDate: selectedDate,
+                  onTap: () {
+                    if (date.month != month) {
+                      return;
+                    }
 
-                        setState(() {
-                          selectedDate = date;
-                        });
-                      },
-                      children: [
-                        for (int i = 0; i < min(index, 10); i++)
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(2.0),
-                              color: i >= 3 && index % 4 == 0
-                                  ? Colors.red[100]
-                                  : Colors.blue[100],
-                            ),
-                          )
-                      ],
+                    setState(() {
+                      selectedDate = date;
+                    });
+
+                    // showModalBottomSheet(
+                    //   context: context,
+                    //   builder: (context) {
+                    //     return ListPage(
+                    //       year: date.year,
+                    //       month: date.month,
+                    //       day: date.day,
+                    //     );
+                    //   },
+                    //   // isScrollControlled: true,
+                    //   barrierColor: Colors.black.withOpacity(.2),
+                    //   clipBehavior: Clip.hardEdge,
+                    //   shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(20.0),
+                    //   ),
+                    // );
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ListPage(
+                          year: date.year,
+                          month: date.month,
+                          day: date.day,
+                        ),
+                      ),
                     );
                   },
-                ),
-              ),
+                  children: [
+                    for (int i = 0; i < min(index, 10); i++)
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0),
+                          color: i >= 3 && index % 4 == 0
+                              ? const Color(0xFFFFCDD2)
+                              : const Color(0xFFBBDEFB),
+                        ),
+                      )
+                  ],
+                );
+              },
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(12.0, 16.0, 12.0, 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    "${selectedDate.day.toString()}일 ${formatWeekDay(selectedDate.weekday)}요일",
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
         ],
       ),
     );
